@@ -1,0 +1,137 @@
+@startuml name
+start
+:Wprowadzenie do gry;
+:Wybór życia przed wojskiem;
+if (Wybór: Złodziejstwo?) then (Tak)
+  :Dodaj Wytrych do ekwipunku;
+else if (Wybór: Rozbójnictwo?) then (Tak)
+  :Dodaj +5 HP i +5 MaxHP;
+else
+  :Brak zmian w ekwipunku;
+endif
+
+:Trening w armii;
+if (Wybór: Fechtunek?) then (Tak)
+  :Dodaj Miecz i Tarczę do ekwipunku;
+else if (Wybór: Strzelectwo?) then (Tak)
+  :Dodaj Łuk i Kołczan do ekwipunku;
+else if (Wybór: Magia?) then (Tak)
+  :Dodaj Magiczny Patyk i status Czarodziej;
+endif
+
+:Nauka przedmiotu;
+if (Wybór: Biologia?) then (Tak)
+  :Dodaj status Biolog;
+else if (Wybór: Botanologia?) then (Tak)
+  :Dodaj status Botanik;
+else if (Wybór: Magia?) then (Tak)
+  if (Już Czarodziej?) then (Tak)
+    :Dodaj status Potężny Czarodziej;
+  else
+    :Dodaj status Czarodziej;
+  endif
+endif
+
+:Ostatni dzień przygotowań;
+if (Wybór: Rozpusta?) then (Tak)
+  :Dodaj status Wczorajszy;
+else if (Wybór: Prowiant?) then (Tak)
+  :Dodaj Pochodnia i Prowiant do ekwipunku;
+else if (Wybór: Apteczka?) then (Tak)
+  :Dodaj Apteczka do ekwipunku;
+endif
+
+:Rozpoczęcie przygody w lesie;
+:Losowanie wydarzeń;
+if (Wydarzenie: Skrzynia?) then (Tak)
+  if (Wytrych w ekwipunku?) then (Tak)
+    :Otwórz skrzynię i dodaj Miksturę zdrowia;
+  else
+    :Nie możesz otworzyć skrzyni;
+  endif
+else if (Wydarzenie: Wilk?) then (Tak)
+  if (Miecz w ekwipunku?) then (Tak)
+    :Zabij wilka bez obrażeń;
+  else
+    :Strata 5 HP;
+    if (HP <= 0?) then (Tak)
+      stop
+      :Zginąłeś!;
+    endif
+  endif
+else if (Wydarzenie: Wędrowiec?) then (Tak)
+  :Spotkanie z wędrowcem;
+  if (Wybrano Rebelia?) then (Tak)
+    :Rebelia przeciw królowi;
+    stop
+    :Zakończenie: Rebelia!;
+  else
+    :Kontynuuj podróż;
+  endif
+endif
+
+:Wybór drogi;
+if (Przejście przez jaskinię?) then (Tak)
+  if (Masz światło?) then (Tak)
+    :Przejście przez jaskinię;
+    :Dodaj Kamień Runiczny do ekwipunku;
+  else
+    :Umierasz z wycieńczenia w jaskini;
+    stop
+    :Zakończenie: Jaskinia!;
+  endif
+else if (Przejście przez górę?) then (Tak)
+  :Skręcenie kostki (-5 HP);
+  if (Apteczka w ekwipunku?) then (Tak)
+    :Opatrzenie kostki (+4 HP);
+  endif
+  if (HP <= 0?) then (Tak)
+    stop
+    :Zginąłeś w górach!;
+  else if (Biolog w statusie?) then (Tak)
+    :Uniknięcie walki z cyklopem;
+  else
+    :Spotkanie z cyklopem;
+    if (Masz broń?) then (Tak)
+      :Pokonanie cyklopa;
+    else
+      :Strata 5 HP;
+      if (HP <= 0?) then (Tak)
+        stop
+        :Zginąłeś!;
+      endif
+    endif
+  endif
+endif
+
+:Dotarcie do miasta;
+if (HP < 50% MaxHP?) then (Tak)
+  if (Losowe wykrwawienie?) then (Tak)
+    stop
+    :Zginąłeś przed miastem!;
+  endif
+endif
+
+:Wybór w mieście;
+if (Poddanie się?) then (Tak)
+  stop
+  :Aresztowany przez straż miejską!;
+else if (Ucieczka z Kamieniem Runicznym?) then (Tak)
+  stop
+  :Rozpoczęcie nowego życia!;
+else
+  :Dotarcie do pałacu;
+  if (Rebelia?) then (Tak)
+    stop
+    :Nowy Władca!;
+  else if (Trofeum z cyklopa?) then (Tak)
+    stop
+    :Doceniony przez króla!;
+  else
+    stop
+    :Egzekucja za dezercję!;
+  endif
+endif
+@enduml
+
+https://www.plantuml.com/plantuml/uml/ZLRDRXit4BxhASQ70Wc20Zaq5xb5azGjWhXs1DU6WTn6N5hcKiiHI2xOvQs6Wpw3uSV8LRTetwkakEkAyQxbatuu_6Q-RsQ-tRV6ehPrjGI55PziVqscbojD3WlFbU1G42nqSnZ-RURVlcfermqJ22ljUG6EIYC5hmuduWfUf8WfV6vlgF22byOw-lKbs6kkuCKvofSJWEaH5LZ2PMDrmwuZF9TEh6ebwyC9NneEkr1dvCENKWas3lNg3NoOWOYV9_ZtXrc2YUVlDKhmbK05BakZ2d4rcKpFTQ2e5k4GTIL4pk8FpgvjhRWSINiYEFCWu1mryvkxVKp-ia6n9N-2H_jFBGFUCRKtpAFQ1tY22u4ZKF6CUTN036qJGOr5MnlupQDEhVbVX5EiPTVFIf2jSnNU2rhIUA8EDqKD5FcUBAfd8AH08P_BCmPyhDlr3gFlGxxFC2ExkMlNgibK08W91yBpe2HMBzcd6AC4nEFsDchNBCYIm_Osg9UFxwesTW_tI-P9OsbyCq1_fia9L7O4OaRicWeb4CH3wBx9URUod7avLbL_dCCya8-SA4uy4xoZNZJWOCcDuC4d_YH33bKuT4s1slC7KTBFS1AsGOQBQhYldJNihkn0RpzP5yXuC0afBA20ebjCQMojmp--s2gIT_bKSAYeNNFZWQoZS7tpRm-pq-kaMbxsfLZAePAJ5pnTy6USYn9SG42Oyv1xhh5T1tNoye9Fe4M8dXOF4dxmjvz_WTUFKG6CfLNw6b8iXDfyQMzuUt-GBYSkJtFQt6rbuYo7ZxMioCfjAmEv5CQYsVTz2WmKmHcVywN00Shf99aB4mwa_lPrIIwed5KUf97Kth9KK8ztaEjoJCesggvBM54HSDhruxti7b6XpaLdvhEGkMplkr4DgfTef8ZZCjX6D1xQUoVGjZSqG6WSxd3NGewnsXh3MQsI3MURbD6w294wfWqADm6tam71TTXxnFgOWe9QUPS7oI-2EebvtcOP_cKH3oGPAmMy-37Etyk-qxqZx5l95LhjCvnNFoMSlhRnSSvOPgCCRbiuikj4igUN7ZhWEXiLVA2a2oMa4ich72wb00-iaKjQyIfhH3Rhkn4xap7NGVYX7PpEI9AAbxkhc6vswCDxlKUAJ8wHxUvLtVsMRyGHMTGilSPL0eqDbVLfuSth7z8Rqz0kR6qyUhZK3fs8NNrclzAxH4h7guFHDNKXX6_7izjLAegjXcPWFRjCqtUQ6s_9eMgweJOs-cZ4AetSV3dOUU1TC97crgUL3E3Lmr9MOoco1vmA8YoeU-lji4DG9kmAsnjaTRyjmtwOgNLAhe7BSAjWc0_rkQOhNbSFG_Wap175hQLUYkIlkN7kHF--y5pMh4Jm20NtNBDoS_UeFs_3Hrqj_mC0
